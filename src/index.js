@@ -7,11 +7,15 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
 
+import { MetaMaskProvider } from "metamask-react";
+
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <MetaMaskProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </MetaMaskProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

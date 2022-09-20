@@ -10,7 +10,7 @@ import { ethers } from "ethers";
 const Home = () => {
   const { status, connect, account, chainId, ethereum } = useMetaMask();
 
-  let transferNFT = async function(event) {
+  let transferNFT = async function() {
     document.getElementById("txHash").innerHTML = "";
     let contractAddress = document.getElementById("inputContractAddress").value;
     let tokenId = document.getElementById("inputTokenId").value;
@@ -73,6 +73,8 @@ const Home = () => {
             </Form>
             <br />
             <p id="txHash"></p>
+            <br /><br />
+            <p>By Mint Square | <a target="_blank" href="https://github.com/mintsquare/simple-erc721-transfer-ui">Source Code</a></p>
           </div>
         :
           <p></p>

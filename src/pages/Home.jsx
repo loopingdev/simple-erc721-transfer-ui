@@ -73,12 +73,12 @@ const Home = () => {
             </Form>
             <br />
             <p id="txHash"></p>
-            <br /><br />
-            <p>By Mint Square | <a target="_blank" href="https://github.com/mintsquare/simple-erc721-transfer-ui">Source Code</a></p>
           </div>
         :
           <p></p>
         }
+        <br /><br />
+        <p>By Mint Square | <a target="_blank" href="https://github.com/mintsquare/simple-erc721-transfer-ui">Source Code</a></p>
       </div>
     </Container>
   )

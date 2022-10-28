@@ -48,6 +48,21 @@ const Home = () => {
     });
   }
 
+  let unwrapWETH = async function() {
+    document.getElementById("txHashUnwrapWETH").innerHTML = "";
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = await provider.getSigner();
+    const abi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"wad","type":"uint256"}],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+    const contractAddress = "0x223D7fceEF24258155a3341C770E8D1ca6B938fE";
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const balance = await contract.balanceOf(account);
+    console.log(balance);
+    contract.withdraw(balance).then((result) => {
+      console.log(result);
+      document.getElementById("txHashUnwrapWETH").innerHTML = "<br />Transaction Hash: " + result.hash;
+    });
+  }
+
   return (
     <Container>
       <div className='starter-template text-center mt-5'>
@@ -73,6 +88,13 @@ const Home = () => {
             </Form>
             <br />
             <p id="txHash"></p>
+
+            {parseInt(chainId) === 280 ? <>
+              <br /><br />
+              <h4>Unwrap WETH</h4>
+              <Button variant="primary" onClick={unwrapWETH}>Unwrap WETH</Button>
+              <p id="txHashUnwrapWETH"></p>
+            </> : ''}
           </div>
         :
           <p></p>

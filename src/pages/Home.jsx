@@ -63,6 +63,32 @@ const Home = () => {
     });
   }
 
+  let updateBaseURI = async function() {
+    document.getElementById("txHashUpdateBaseURI").innerHTML = "";
+    let contractAddress = document.getElementById("inputContractAddress2").value;
+    let baseURI = document.getElementById("inputBaseURI").value;
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = await provider.getSigner();
+    const abi = [{
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "baseURI_",
+          "type": "string"
+        }
+      ],
+      "name": "setBaseURI",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }];
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    contract.setBaseURI(baseURI).then((result) => {
+      console.log(result);
+      document.getElementById("txHashUpdateBaseURI").innerHTML = "Transaction Hash: " + result.hash;
+    });
+  }
+
   return (
     <Container>
       <div className='starter-template text-center mt-5'>
@@ -94,6 +120,16 @@ const Home = () => {
               <h4>Unwrap WETH</h4>
               <Button variant="primary" onClick={unwrapWETH}>Unwrap WETH</Button>
               <p id="txHashUnwrapWETH"></p>
+
+              <br /><br /><br />
+              <Form onSubmit={(e) => {e.preventDefault();}}>
+                <Form.Label><h4>Update Collection BaseURI</h4></Form.Label>
+                <Form.Control id="inputContractAddress2" type="text" placeholder="ERC721 Contract Address" /><br />
+                <Form.Control id="inputBaseURI" type="text" placeholder="BaseURI" /><br />
+                <Button variant="primary w-100 btn-lg" type="submit" onClick={updateBaseURI}>Update</Button>
+              </Form>
+              <br />
+              <p id="txHashUpdateBaseURI"></p>
             </> : ''}
           </div>
         :
